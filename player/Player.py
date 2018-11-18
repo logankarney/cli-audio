@@ -3,6 +3,7 @@
 import pyaudio
 import wave
 import time
+import os #used for finding a file
 
 class Player:
     def __init__(self):
@@ -23,8 +24,18 @@ class Player:
 
     def play(self, track):
         self.paused = False
-        self.currentSong = track
-        self.wf = wave.open(track, 'rb')
+        ###Nolan's code here
+        #code for using os functions to see if a file exists found here:
+        #https://therenegadecoder.com/code/how-to-check-if-a-file-exists-in-python/
+
+        exists = os.path.isfile('cli-audio/library/'+track)
+        if exists:
+            self.currentSong = track
+            self.wf = wave.open(track, 'rb')
+        else:
+            throw CLI_Audio_File_Exception
+        
+        ###
 
         # instantiate PyAudio (1)
         self.p = pyaudio.PyAudio()
