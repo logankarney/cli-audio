@@ -16,10 +16,10 @@ class Player:
     def pause(self):
         if self.paused == False:
             self.paused = True
-            self.stream.stop_stream()
+           # self.stream.stop_stream()
         else:
             self.paused = False
-            self.stream.start_stream()
+            #self.stream.start_stream()
 
     def play(self, track):
         self.paused = False
