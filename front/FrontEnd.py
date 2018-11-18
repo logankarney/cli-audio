@@ -4,6 +4,7 @@ import os
 
 import sys
 
+"""  Interactive GUI for the Player, shows what song is currently being played """
 class FrontEnd:
 
     def __init__(self, player):
@@ -32,6 +33,7 @@ class FrontEnd:
                 self.updateSong()
                 self.stdscr.touchwin()
                 self.stdscr.refresh()
+            # When the user selects the 'library' option
             elif c == ord('l'):
                 self.listLibrary()
                 self.stdscr.touchwin()
@@ -56,24 +58,32 @@ class FrontEnd:
         self.player.play(path.decode(encoding="utf-8"))
 
     def listLibrary(self):
+    """ Creates a new window, and displays all .wav files in the media directory  """
         #https://askubuntu.com/questions/98181/how-to-get-screen-size-through-python-curses
         #		answer provided by Timo
         height, width = self.stdscr.getmaxyx()
         changeWindow = curses.newwin(height, width, 0, 0)
+
+        # Adds a border to the Window
         changeWindow.border()
         changeWindow.addstr(0, 0, "Library", curses.A_REVERSE)
 
         #https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
         #		answer provided by sepp2k
+        # Creates an array from the files in media
         arry = os.listdir("media");
- 
+        
+        #y-value offset
         offset = 0
         for x in range(len(arry)):
             if arry[x].endswith(".wav"):
                 changeWindow.addstr(2*offset + 2,1, arry[x]) 
                 offset = offset + 1
 
+        # Refreshes the window
         self.stdscr.refresh()
+
+        # Waits for user input before switching back to the main window
         char = changeWindow.getch()
         del changeWindow
         self.stdscr.touchwin()
