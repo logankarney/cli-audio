@@ -4,6 +4,7 @@ import pyaudio
 import wave
 import time
 import os #used for finding a file
+from cli_exceptions import CLI_Audio_Exception
 
 class Player:
     def __init__(self):
@@ -24,28 +25,25 @@ class Player:
 
     def play(self, track):
         self.paused = False
-        ###Nolan's code here
-        #code for using os functions to see if a file exists found here:
-        #https://therenegadecoder.com/code/how-to-check-if-a-file-exists-in-python/
+        ##code for using os functions to see if a file exists found here:
+        ##https://therenegadecoder.com/code/how-to-check-if-a-file-exists-in-python/
 
-        exists = os.path.isfile('cli-audio/library/'+track)
+        exists = os.path.isfile('cli-audio/media/'+track)
         if exists:
             self.currentSong = track
             self.wf = wave.open(track, 'rb')
         else:
-            throw CLI_Audio_File_Exception
-        
-        ###
+            raise CLI_Audio_Exception.CLI_Audio_File_Exception
 
         # instantiate PyAudio (1)
         self.p = pyaudio.PyAudio()
 
         # open self.stream using callback (3)
         self.stream = self.p.open(format=self.p.get_format_from_width(self.wf.getsampwidth()),
-                channels=self.wf.getnchannels(),
-                rate=self.wf.getframerate(),
-                output=True,
-                stream_callback=self.callback)
+           channels=self.wf.getnchannels(),
+           rate=self.wf.getframerate(),
+           output=True,
+           stream_callback=self.callback)
 
         # start the self.stream (4)
         self.stream.start_stream()
