@@ -1,7 +1,7 @@
 import curses
 import curses.textpad
 import os
-import cli_exceptions
+from cli_exceptions import CLI_Audio_Exception
 import sys
 
 """  Interactive GUI for the Player, shows what song is currently being played """
@@ -13,8 +13,8 @@ class FrontEnd:
         rows, columns = os.popen('stty size', 'r').read().split()
         try:
             if (int(rows) < 24 or int(columns) < 80):
-                raise Exception
-        except Exception:
+                raise CLI_Audio_Exception.CLI_Audio_Screen_Size_Exception("The Screen is too small. Make it bigger and try again.")
+        except CLI_Audio_Exception.CLI_Audio_Screen_Size_Exception:
             print("Window is too small. Please make it larger.")
             sys.exit()
 
@@ -68,7 +68,7 @@ class FrontEnd:
         ##try to play song, and catch error if it doesn't exist.
         try:
             self.player.play(path.decode(encoding="utf-8"))
-        except CLI_Audio_File_Exception:
+        except CLI_Audio_Exception.CLI_Audio_File_Exception:
             print("***That song doesn't exist, or was typed incorrectly.***")
 
     def listLibrary(self):

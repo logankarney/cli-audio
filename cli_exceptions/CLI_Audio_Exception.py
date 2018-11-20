@@ -1,6 +1,7 @@
 class CLI_Audio_Exception(Exception):
     """ Base class for exceptions in CLI_Audio """
-    pass
+    def __init__(self, error):
+        self.error = error
 
 class CLI_Audio_File_Exception(CLI_Audio_Exception):
     """ Exception raised when a flie does not exist """

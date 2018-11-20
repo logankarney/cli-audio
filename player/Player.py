@@ -28,12 +28,12 @@ class Player:
         ##code for using os functions to see if a file exists found here:
         ##https://therenegadecoder.com/code/how-to-check-if-a-file-exists-in-python/
 
-        exists = os.path.isfile('cli-audio/media/'+track)
+        exists = os.path.isfile('/media/'+track)
         if exists:
             self.currentSong = track
             self.wf = wave.open(track, 'rb')
         else:
-            raise CLI_Audio_Exception.CLI_Audio_File_Exception
+            raise CLI_Audio_Exception.CLI_Audio_File_Exception("That file doesn't exist, or was spelled incorrectly")
 
         # instantiate PyAudio (1)
         self.p = pyaudio.PyAudio()
