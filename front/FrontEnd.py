@@ -50,7 +50,8 @@ class FrontEnd:
                 self.stdscr.refresh()
     
     def updateSong(self):
-        self.stdscr.addstr(15,10, "                                        ")
+        self.stdscr.refresh()
+        self.stdscr.addstr(15,10, "                                                                                    ")
         self.stdscr.addstr(15,10, "Now playing: " + self.player.getCurrentSong())
 
     def changeSong(self):
